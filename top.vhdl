@@ -65,6 +65,13 @@ ARCHITECTURE behavior OF top IS
 			pwm_out	:	out	std_logic
 		);
 	END COMPONENT;
+	COMPONENT servo_module IS
+		PORT (
+			clock		:	in		std_logic;
+			pwm_dc	:	in		std_logic_vector(7 DOWNTO 0);
+			pwm_out	:	out	std_logic
+		);
+	END COMPONENT;
 	COMPONENT progmem IS
 		PORT (
 		address	: IN std_logic_vector (7 DOWNTO 0);
@@ -172,13 +179,13 @@ ARCHITECTURE behavior OF top IS
 			RX,
 			open
 		);
-	pwm0_instance : pwm_module
+	pwm0_instance : servo_module
 		PORT MAP (
 			pwm_clk,
 			pwm0_dc,
 			D4
 		);
-	pwm1_instance : pwm_module
+	pwm1_instance : servo_module
 		PORT MAP (
 			pwm_clk,
 			pwm1_dc,
