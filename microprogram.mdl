@@ -1,0 +1,449 @@
+#include microprogram_def.mdl
+
+/*
+ *	Processor startup
+ */
+init(0x00) {
+	perm mpc_register_write(H);
+	perm cache_register_file_port1_write(H);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * Rz = Rx + Ry (unsigned)
+ */
+function ADDU(auto, 0x20, 3) {
+	fix math_alu_csel(ADD_U), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx - Ry (unsigned)
+ */
+function SUBU(auto, 0x21, 3) {
+	fix math_alu_csel(SUB_U), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx * Ry (unsigned)
+ */
+function MULU(auto, 0x22, 3) {
+	fix math_alu_csel(MUL_U), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx / Ry (unsigned)
+ */
+function DIVU(auto, 0x23, 3) {
+	fix math_alu_csel(DIV_U), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx + Ry (signed)
+ */
+function ADD(auto, 0x24, 3) {
+	fix math_alu_csel(ADD), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx - Ry (signed)
+ */
+function SUB(auto, 0x25, 3) {
+	fix math_alu_csel(SUB), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx * Ry (signed)
+ */
+function MUL(auto, 0x26, 3) {
+	fix math_alu_csel(MUL), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx / Ry (signed)
+ */
+function DIV(auto, 0x27, 3) {
+	fix math_alu_csel(DIV), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx rotatet right by Ry
+ */
+function RR(auto, 0x28, 3) {
+	fix math_alu_csel(RR), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx rotatet left by Ry
+ */
+function RL(auto, 0x29, 3) {
+	fix math_alu_csel(RL), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx logical right shifted by Ry
+ */
+function SRL(auto, 0x2A, 3) {
+	fix math_alu_csel(SRL), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx logical left shifted by Ry
+ */
+function SLL(auto, 0x2B, 3) {
+	fix math_alu_csel(SLL), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx arithmetic right shifted by Ry
+ */
+function SRA(auto, 0x2C, 3) {
+	fix math_alu_csel(SRA), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx | Ry, (bitwise or)
+ */
+function OR(auto, 0x2D, 3) {
+	fix math_alu_csel(OR), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx & Ry, (bitewise and)
+ */
+function AND(auto, 0x2E, 3) {
+	fix math_alu_csel(AND), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = Rx ~ Ry, (bitwise exclusive or)
+ */
+function XOR(auto, 0x2F, 3) {
+	fix math_alu_csel(XOR), cache_register_file_port0_isel(math_alu.low);
+	call load_operands();
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+/*
+ * Rz = !Rx, (bitwise not)
+ */
+function NOT(auto, 0x30, 2) {
+	fix math_alu_csel(NOT), cache_register_file_port0_isel(math_alu.low);
+	fix operand2_register_isel(cache_register_file.out);
+	set pc_register_write(H);
+	set address_register_write(H);
+	set noop(0);
+	set operand1_register_write(H);
+	set pc_register_write(H);
+	set noop(0);
+	set address_register_write(H);
+	set noop(0);
+	set cache_register_file_port0_write(H);
+	call fetch();
+}
+
+// noop(0) before pc_register_write(H) due to the M9K flash on MAX10
+/*
+ * pc = Rx
+ */
+function JMP(auto, 0x40, 1) {
+	set pc_register_write(H);
+	set alu_status_register_isel(const.1);
+	set alu_status_register_write(H), alu_status_register_isel(const.1);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx == Ry (unsigned)
+ */
+function BEQ(auto, 0x41, 3) {
+	call load_operands();
+	fix math_alu_csel(EQ);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx > Ry (unsigned)
+ */
+function BGTU(auto, 0x42, 3) {
+	call load_operands();
+	fix math_alu_csel(GT_U);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx < Ry (unsigned)
+ */
+function BLTU(auto, 0x43, 3) {
+	call load_operands();
+	fix math_alu_csel(LT_U);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx >= Ry (unsigned)
+ */
+function BGEQU(auto, 0x44, 3) {
+	call load_operands();
+	fix math_alu_csel(GEQ_U);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx <= Ry (unsigned)
+ */
+function BLEQU(auto, 0x45, 3) {
+	call load_operands();
+	fix math_alu_csel(LEQ_U);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx >= Ry (signed)
+ */
+function BGEQ(auto, 0x46, 3) {
+	call load_operands();
+	fix math_alu_csel(GEQ);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx > Ry (signed)
+ */
+function BGT(auto, 0x47, 3) {
+	call load_operands();
+	fix math_alu_csel(GT);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx < Ry (signed)
+ */
+function BLT(auto, 0x48, 3) {
+	call load_operands();
+	fix math_alu_csel(LT);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * pc = Rz, if Rx <= Ry (signed)
+ */
+function BLEQ(auto, 0x49, 3) {
+	call load_operands();
+	fix math_alu_csel(LEQ);
+	set pc_register_write(H);
+	set alu_status_register_isel(math_alu.status);
+	set alu_status_register_write(H), alu_status_register_isel(math_alu.status);
+	set pc_register_write(H);
+	set alu_status_register_isel(const.0);
+	set alu_status_register_write(H), alu_status_register_isel(const.0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * Rx = #const
+ */
+ function LC(auto, 0x14, 2) {
+ 	fix cache_register_file_port0_isel(system.pmem_dat);
+ 	set pc_register_write(H);
+ 	set noop(0);
+ 	set address_register_write(H);
+ 	set noop(0);
+ 	set pc_register_write(H);
+ 	set noop(0);
+ 	set cache_register_file_port0_write(H);
+ 	call fetch();
+ }
+
+/*
+ * 1+3 Cycle No Operation
+ */
+function NOP(auto, 0x50, 0) {
+	set noop(0);
+	call fetch();
+}
+
+/*
+ * Fetch next command
+ */
+virtual fetch() {
+	set pc_register_write(H);
+	set noop(0);
+	set m2_multiplexer_isel(cmd_trans_rom.out);
+}
+
+/*
+ * Load the two operands addressed by the next two bytes
+ * of the program code to the alu registers.
+ */
+virtual load_operands() {
+	fix operand2_register_isel(cache_register_file.out);
+	set pc_register_write(H);
+	set address_register_write(H);
+	set noop(0);
+	set operand1_register_write(H);
+	set pc_register_write(H);
+	set address_register_write(H);
+	set noop(0);
+	set operand2_register_write(H);
+}

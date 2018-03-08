@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.0">
+	<xsd:element  name="architecture">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="register" type="register" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element name="rom" type="rom" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element name="registerFile" minOccurs="0" type="registerFile" maxOccurs="unbounded" />
+				<xsd:element name="alu" type="alu" minOccurs="0" maxOccurs="unbounded" />		
+				<xsd:element name="multiplexer" type="multiplexer" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element name="custom" type="custom" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+			<xsd:attribute name="wordSize" type="xsd:int" />
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="custom">
+		<xsd:all>
+			<xsd:element name="id" type="xsd:string" />
+			<xsd:element name="generics" type="genericsList" minOccurs="0" />
+			<xsd:element name="connectors" type="customConnectorsList" />
+			<xsd:element name="definition" type="xsd:string" />
+		</xsd:all>
+	</xsd:complexType>
+	
+	<xsd:complexType name="register">
+		<xsd:all>
+			<xsd:element name="id" type="xsd:string" />
+			<xsd:element name="size" type="xsd:int" />
+			<xsd:element name="inputs" type="inputList" />		
+			<xsd:element name="output" type="xsd:string" />
+			<xsd:element name="control" type="xsd:string" />
+		</xsd:all>
+		<xsd:attribute name="x" type="xsd:int" />
+		<xsd:attribute name="y" type="xsd:int" />
+	</xsd:complexType>
+	
+	<xsd:complexType name="rom">
+		<xsd:all>
+			<xsd:element name="id" type="xsd:string" />
+			<xsd:element name="wordSize" type="xsd:int" />
+			<xsd:element name="addressSize" type="xsd:int" />
+			<xsd:element name="contentFile" type="xsd:string" />
+			<xsd:element name="addresses" type="addressList" minOccurs="1" />
+			<xsd:element name="output" type="xsd:string" />
+			<xsd:element name="control" type="xsd:string" />
+		</xsd:all>
+		<xsd:attribute name="x" type="xsd:int" />
+		<xsd:attribute name="y" type="xsd:int" />
+	</xsd:complexType>
+	
+	<xsd:complexType name="registerFile">
+		<xsd:all>
+			<xsd:element name="id" type="xsd:string" />
+			<xsd:element name="wordSize" type="xsd:int" />
+			<xsd:element name="addressSize" type="xsd:int" />
+			<xsd:element name="ports" type="portList" />
+			<xsd:element name="control" type="xsd:string" />
+		</xsd:all>
+		<xsd:attribute name="x" type="xsd:int" />
+		<xsd:attribute name="y" type="xsd:int" />
+	</xsd:complexType>
+	
+	<xsd:complexType name="alu">
+		<xsd:all>
+			<xsd:element name="id" type="xsd:string" />
+			<xsd:element name="wordSize" type="xsd:int" />
+			<xsd:element name="inputsOperandA" type="inputList" />
+			<xsd:element name="inputsOperandB" type="inputList" />
+			<xsd:element name="output1" type="xsd:string" />
+			<xsd:element name="output2" type="xsd:string" />
+			<xsd:element name="operations" type="operationList" />
+			<xsd:element name="conditions" type="conditionList" minOccurs="0" />
+			<xsd:element name="status" type="xsd:string" minOccurs="0" />
+			<xsd:element name="control" type="xsd:string" />
+		</xsd:all>
+		<xsd:attribute name="x" type="xsd:int" />
+		<xsd:attribute name="y" type="xsd:int" />
+	</xsd:complexType>
+	
+	<xsd:complexType name="multiplexer">
+		<xsd:all>
+			<xsd:element name="id" type="xsd:string" />
+			<xsd:element name="wordSize" type="xsd:int" />
+			<xsd:element name="inputs" type="inputList" />
+			<xsd:element name="output" type="xsd:string" />
+			<xsd:element name="control" type="xsd:string" />
+		</xsd:all>
+		<xsd:attribute name="x" type="xsd:int" />
+		<xsd:attribute name="y" type="xsd:int" />
+	</xsd:complexType>
+	
+	<xsd:complexType name="inputList">
+		<xsd:sequence>
+			<xsd:element name="input" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="addressList">
+		<xsd:sequence>
+			<xsd:element name="address" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="portList">
+		<xsd:sequence>
+			<xsd:element name="port" type="port" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="port">
+		<xsd:sequence>
+			<xsd:element name="type" type="portDirection" />
+			<xsd:element name="addresses" type="addressList" minOccurs="1" />
+			<xsd:element name="inputs" type="inputList" minOccurs="0" />
+			<xsd:element name="output" type="xsd:string" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="operationList">
+		<xsd:sequence>
+			<xsd:element name="operation" type="operationEnum" minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="conditionList">
+		<xsd:sequence>
+			<xsd:element name="condition" type="conditionEnum" minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="portDirection">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="in" />
+			<xsd:enumeration value="out" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="customConnectorsList">
+		<xsd:sequence>
+			<xsd:element name="connector" type="connector" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="connector">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" />
+			<xsd:element name="size" type="xsd:int" />
+			<xsd:element name="type" type="portDirection" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="genericsList">
+		<xsd:sequence>
+			<xsd:element name="generic" type="generic" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="generic">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" />
+			<xsd:element name="size" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="operationEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="add" />		<!-- Add 					 -->
+			<xsd:enumeration value="add_u" />	<!-- Add 			unsigned -->
+			<xsd:enumeration value="sub" />		<!-- Subtract				 -->
+			<xsd:enumeration value="sub_u" />	<!-- Subtract 		unsigned -->
+			<xsd:enumeration value="mul" />		<!-- Multiply 				 -->
+			<xsd:enumeration value="mul_u" />	<!-- Multiply 		unsigned -->
+			<xsd:enumeration value="div" />		<!-- Divide 				 -->
+			<xsd:enumeration value="div_u" />	<!-- Divide 		unsigned -->
+			<xsd:enumeration value="rr" />		<!-- Rotate Right 			 -->
+			<xsd:enumeration value="rl" />		<!-- Rotate Left 			 -->
+			<xsd:enumeration value="srl" />		<!-- Shift Right Logic 		 -->
+			<xsd:enumeration value="sll" />		<!-- Shift Left Logic 		 -->
+			<xsd:enumeration value="sra" />		<!-- Shift Right Arithmetic  -->
+			<xsd:enumeration value="and" />		<!-- Bitwise AND 			 -->
+			<xsd:enumeration value="or" />		<!-- Bitwise OR 			 -->
+			<xsd:enumeration value="xor" />		<!-- Bitwise XOR 			 -->
+			<xsd:enumeration value="not" />		<!-- Bitwise NOT 			 -->
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="conditionEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="gt" />		<!-- A > B 			 -->
+			<xsd:enumeration value="gt_u" />	<!-- A > B 	unsigned -->
+			<xsd:enumeration value="lt" />		<!-- A < B 			 -->
+			<xsd:enumeration value="lt_u" />	<!-- A < B 	unsigned -->
+			<xsd:enumeration value="geq" />		<!-- A >= B 		 -->
+			<xsd:enumeration value="geq_u" />	<!-- A >= B unsigned -->
+			<xsd:enumeration value="leq" />		<!-- A <= B 		 -->
+			<xsd:enumeration value="leq_u" />	<!-- A <= B unsigned -->
+			<xsd:enumeration value="eq" />		<!-- A == B 		 -->
+		</xsd:restriction>
+	</xsd:simpleType>				
+
+</xsd:schema>
+<!-- xjc D:\OneDrive\Projekte\git\CodeGenerator\Templates\specification.xsd -d D:\OneDrive\Projekte\git\CodeGenerator\src\jaxbClasses -->

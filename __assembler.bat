@@ -1,0 +1,1 @@
+java -jar .\sscgen.jar -e -i .\mnemonics.csv

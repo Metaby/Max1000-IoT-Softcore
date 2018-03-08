@@ -1,0 +1,17 @@
+field pc_register_write = {0,0}{H, L}{1, 0};
+field mpc_register_write = {1,1}{H, L}{1, 0};
+field operand1_register_write = {2,2}{H, L}{1, 0};
+field operand2_register_write = {3,3}{H, L}{1, 0};
+field operand2_register_isel = {4,6}{const.1, const.0, math_alu.high, math_alu.low, cache_register_file.out}{2, 1, 4, 3, 0};
+field address_register_write = {7,7}{H, L}{1, 0};
+field alu_status_register_write = {8,8}{H, L}{1, 0};
+field alu_status_register_isel = {9,10}{const.1, const.0, math_alu.status}{2, 1, 0};
+field alu_carry_register_write = {11,11}{H, L}{1, 0};
+field alu_carry_register_isel = {12,13}{const.1, const.0, math_alu.status}{2, 1, 0};
+field cache_register_file_port0_isel = {14,15}{system.pmem_dat, const.0, math_alu.high, math_alu.low}{1, 0, 3, 2};
+field cache_register_file_port0_write = {16,16}{H, L}{1, 0};
+field cache_register_file_port1_write = {17,17}{H, L}{1, 0};
+field math_alu_csel = {18,22}{RR, GEQ_U, ADD, LEQ_U, SRA, LT, SRL, SUB_U, SLL, MUL_U, SUB, GT_U, OR, ADD_U, MUL, DIV_U, EQ, GT, DIV, NOT, GEQ, AND, LEQ, RL, XOR, LT_U}{8, 19, 4, 20, 12, 22, 10, 1, 11, 2, 5, 17, 14, 0, 6, 3, 25, 21, 7, 16, 23, 13, 24, 9, 15, 18};
+field m2_multiplexer_isel = {23,23}{cmd_trans_rom.out, mpc_inc_alu.out}{1, 0};
+field noop = {0,23}{0}{0};
+
